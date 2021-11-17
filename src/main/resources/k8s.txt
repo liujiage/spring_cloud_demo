@@ -23,6 +23,7 @@ kubectl get services balanced
 kubectl get deployments
 kubectl get pods
 kubectl config view
+cat ~/.kube/config
 
 kubectl cluster-info
 kubectl get nodes
