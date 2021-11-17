@@ -1,0 +1,40 @@
+./mvnw spring-boot:run
+java -jar ./spring_application.jar
+
+install consul server
+https://www.consul.io/downloads
+https://learn.hashicorp.com/tutorials/consul/get-started-agent
+consul agent -dev
+consul members
+curl localhost:8500/v1/catalog/nodes
+#dns interface to discover the nodes
+dig @127.0.0.1 -p 8600 Judiths-MBP.node.consul
+consul leave
+consul reload
+
+https://learn.hashicorp.com/tutorials/consul/get-started-key-value-store?in=consul/getting-started
+consul kv put redis/config/minconns 1
+consul kv put redis/config/maxconns 25
+consul kv get redis/config/minconns
+consul kv get -detailed redis/config/users/admin
+consul kv get -recurse
+consul kv delete redis/config/minconns
+consul kv delete -recurse redis
+
+http://localhost:8500/ui
+
+#create a real server cluster
+https://learn.hashicorp.com/tutorials/consul/get-started-create-datacenter?in=consul/getting-started
+#for test start only one consul server as master
+consul agent \
+  -server \
+  -bootstrap-expect=1 \
+  -node=agent-one \
+  -bind=192.168.1.86 \
+  -data-dir=/tmp/consul \
+  -client 0.0.0.0 \
+  -ui \
+  -config-dir=/etc/consul.d
+
+#setting openjdk
+sudo ln -sfn $JAVA_HOME/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
