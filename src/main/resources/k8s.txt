@@ -6,17 +6,23 @@ minikube dashboard
 
 #deploy applications
 kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4
+#create a service
 kubectl expose deployment hello-minikube --type=NodePort --port=8080
-
 kubectl get services hello-minikube
-#start service
+#start a service
 minikube service hello-minikube
-kubectl port-forward service/hello-minikube 7080:8080
+#config a service mapping service's port 0.0.0.0 ,using host ip
+kubectl port-forward --address 0.0.0.0 service/hello-minikube 8080:8080
+#delete a service
+kubectl delete -n default service hello-minikube
 http://localhost:7080/
-#load balancer deploy applications
+#load balancer deploy applications and create a pod
 kubectl create deployment balanced --image=k8s.gcr.io/echoserver:1.4
 kubectl expose deployment balanced --type=LoadBalancer --port=8080
-
+#or
+kubectl apply -f deploy.yaml
+#restart a pod
+kubectl rollout restart -n default deployment hello-minikube
 minikube tunnel
 kubectl get services balanced
 
@@ -41,7 +47,6 @@ docker cp repo:/git/getting-started/ .
 
 cd getting-started
 docker build -t docker101tutorial .
-
 docker run -d -p 80:80 --name docker-tutorial docker101tutorial
 
 #register and login a docker hub
@@ -70,4 +75,4 @@ netstat -nr
 sudo route -n add -net 172.20.0.0 -netmask 255.255.255.0 192.168.1.86
 *mac has no virtual network, so the host can not visitor docker ip
 
-
+https://www.imooc.com/article/276290/
