@@ -47,8 +47,6 @@ docker run -d -p 80:80 --name docker-tutorial docker101tutorial
 #register and login a docker hub
 https://docs.docker.com/get-started/?utm_campaign=2021-09-16-mailgun-email-verified&utm_medium=email&utm_source=mailgun
 https://hub.docker.com/repository/docker/liujiage/docker-hub
-Docker hub
-liujiage/yangyang
 
 #push a images to hub
 docker tag docker101tutorial liujiage/docker-hub:docker101tutorial
